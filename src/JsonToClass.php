@@ -174,7 +174,4 @@ class JsonToClass{
 }
 
 
-$jtc = new JsonToClass(__DIR__."\\test.json");
-$jtc->toFile(null, true);
-
 
