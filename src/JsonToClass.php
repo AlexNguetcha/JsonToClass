@@ -74,6 +74,35 @@ class JsonToClass{
         return $constructor;    
     }
 
+    private function buildGetters()
+    {
+        $getters = "";
+        for ($i=0; $i < count($this->attrsNames); $i++) {
+            $attrName =  $this->attrsNames[$i];
+            $type = $this->attrs[$i][1];
+            $getterName = strtoupper($attrName[0]) . str_replace($attrName[0], "", $attrName) ;
+            $func = "\tpublic function "; 
+            //$func = "\tpublic function get" . $getterName . "()\n\t{\n";
+            if ($type === "bool") {
+                //isser name
+                $func .= "is";
+            }else{
+                //getter name
+                $func .= "get";
+            }
+            if ($type !== "mixed") {
+                //add function return type
+                $func .= $getterName . "(): " . $type;
+            }
+            $func .= "\n\t{\n";
+                        
+            $func .= "\t\treturn $" . "this->" . $attrName . ";\n";
+            $func .= "\t}";
+            $getters .= $func ."\n\n";
+        }
+        return $getters;    
+    }
+
     public function build(): string
     {
         //class declaration
@@ -86,6 +115,8 @@ class JsonToClass{
             $this->str .= "\t" .$attr[2]. " $". $attr[0] . ";\n";
         }
         $this->str .= "\n" . $this->buildConstructor();
+        $this->str .="\n\n";
+        $this->str .= $this->buildGetters();
         $this->str .= "}";
         //print_r($this->str);
         return $this->str;

@@ -1,7 +1,7 @@
 <?php
 class Person
 {
-	private $name;
+	public $name;
 	private $old;
 	private $sick;
 
@@ -11,4 +11,21 @@ class Person
 		$this->old = $old;
 		$this->sick = $sick;
 	}
+
+
+	public function getName(): string
+	{
+		return $this->name;
+	}
+
+	public function getOld(): int
+	{
+		return $this->old;
+	}
+
+	public function isSick(): bool
+	{
+		return $this->sick;
+	}
+
 }
