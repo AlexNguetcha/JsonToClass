@@ -2,7 +2,7 @@
     "class_name": "Person",
     "class_attrs": {
         "name": {
-            "type": "str",
+            "type": "string",
             "visibility": "private"
         },
         "old": {
