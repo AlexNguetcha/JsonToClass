@@ -3,7 +3,7 @@
 simple tool to create **php class** from **json file**.
 
 
-###Example:
+####Example:####
 
 ```json
 {
@@ -34,7 +34,7 @@ $jtc = new JsonToClass(__DIR__."\\post.json");
 $jtc->toFile(null, true);
 ```
 
-###Output:
+####Output:####
 ```php
 //Post.php
 <?php
