@@ -103,6 +103,26 @@ class JsonToClass{
         return $getters;    
     }
 
+    private function buildSetters()
+    {
+        $setters = "";
+        for ($i=0; $i < count($this->attrsNames); $i++) {
+            $attrName =  $this->attrsNames[$i];
+            $type = $this->attrs[$i][1];
+            $param = "$" . $attrName;
+            $setterName = strtoupper($attrName[0]) . str_replace($attrName[0], "", $attrName) ;
+            
+            if ($type !== "mixed") {
+                $param = $type . " " .$param;
+            } 
+            $func = "\tpublic function set" . $setterName . "(" . $param . ")\n\t{\n";
+            $func .= "\t\t$" . "this->" . $attrName . " = $" . $attrName .";\n";
+            $func .= "\t}";
+            $setters .= $func ."\n\n";
+        }
+        return $setters;    
+    }
+
     public function build(): string
     {
         //class declaration
@@ -115,15 +135,22 @@ class JsonToClass{
             $this->str .= "\t" .$attr[2]. " $". $attr[0] . ";\n";
         }
         $this->str .= "\n" . $this->buildConstructor();
-        $this->str .="\n\n";
+        $this->str .="\n";
         $this->str .= $this->buildGetters();
+        $this->str .="\n";
+        $this->str .= $this->buildSetters();
         $this->str .= "}";
         //print_r($this->str);
         return $this->str;
     }
 
-    public function toFile(string $filename, bool $force=false)
+    public function toFile(string $filename=null, bool $force=false)
     {
+        if ($filename === null) {
+            $filename = strtoupper($this->class_name[0]) . str_replace($this->class_name[0], "", $this->class_name);
+            $filename .= ".php";
+        }
+        
         if ( file_exists($filename) === true ) {
             if ($force === false) {
                 throw new Exception($filename . " already exist!");
@@ -138,6 +165,6 @@ class JsonToClass{
 
 
 $jtc = new JsonToClass(__DIR__."\\test.json");
-$jtc->toFile("src/test.php", true);
+$jtc->toFile();
 
 
