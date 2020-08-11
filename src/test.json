@@ -1,0 +1,17 @@
+{
+    "class_name": "Person",
+    "class_attrs": {
+        "name": {
+            "type": "str",
+            "visibility": "private"
+        },
+        "old": {
+            "type": "int",
+            "visibility": "private"
+        },
+        "sick": {
+            "type": "bool",
+            "visibility": "private"
+        }
+    }
+}
