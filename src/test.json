@@ -1,5 +1,5 @@
 {
-    "class_name": "Person",
+    "class_name": "person",
     "class_attrs": {
         "name": {
             "type": "string",

@@ -27,6 +27,7 @@ class JsonToClass{
             if ($key === "class_name") {
                 //get the class name
                $this->class_name = $value;
+               $this->class_name = strtoupper($this->class_name[0]) . str_replace($this->class_name[0], "", $this->class_name);
             }else if ($key === "class_attrs") {
                 //get all class attributes
                 
@@ -82,7 +83,6 @@ class JsonToClass{
             $type = $this->attrs[$i][1];
             $getterName = strtoupper($attrName[0]) . str_replace($attrName[0], "", $attrName) ;
             $func = "\tpublic function "; 
-            //$func = "\tpublic function get" . $getterName . "()\n\t{\n";
             if ($type === "bool") {
                 //isser name
                 $func .= "is";
@@ -92,7 +92,7 @@ class JsonToClass{
             }
             if ($type !== "mixed") {
                 //add function return type
-                $func .= $getterName . "(): " . $type;
+                $func .= $this->methodName($getterName) . "(): " . $type;
             }
             $func .= "\n\t{\n";
                         
@@ -101,6 +101,17 @@ class JsonToClass{
             $getters .= $func ."\n\n";
         }
         return $getters;    
+    }
+
+    private function methodName($attrName): string
+    {
+        //check underscrore in the variable name
+        $find = strpos($attrName, "_");
+        if ($find !== false) {
+            //example: create_at => createAt
+            $attrName = \str_replace("_".$attrName[$find+1], strtoupper($attrName[$find+1]), $attrName);
+        }
+        return $attrName;
     }
 
     private function buildSetters()
@@ -115,7 +126,7 @@ class JsonToClass{
             if ($type !== "mixed") {
                 $param = $type . " " .$param;
             } 
-            $func = "\tpublic function set" . $setterName . "(" . $param . ")\n\t{\n";
+            $func = "\tpublic function set" . $this->methodName($setterName) . "(" . $param . ")\n\t{\n";
             $func .= "\t\t$" . "this->" . $attrName . " = $" . $attrName .";\n";
             $func .= "\t}";
             $setters .= $func ."\n\n";
@@ -127,7 +138,7 @@ class JsonToClass{
     {
         //class declaration
 
-        $this->str = "<?php\n";
+        $this->str = "<?php\n\n";
         $this->str .= "class " . $this->class_name . "\n{\n";
         //attribute declaration
         for ($i=0; $i < count($this->attrs); $i++) { 
@@ -144,7 +155,7 @@ class JsonToClass{
         return $this->str;
     }
 
-    public function toFile(string $filename=null, bool $force=false)
+    public function toFile(?string $filename=null, bool $force=false)
     {
         if ($filename === null) {
             $filename = strtoupper($this->class_name[0]) . str_replace($this->class_name[0], "", $this->class_name);
@@ -164,7 +175,7 @@ class JsonToClass{
 }
 
 
-$jtc = new JsonToClass(__DIR__."\\test.json");
-$jtc->toFile();
+$jtc = new JsonToClass(__DIR__."\\post.json");
+$jtc->toFile(null, true);
 
 
