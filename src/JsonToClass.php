@@ -4,7 +4,12 @@ namespace JTC;
 
 use Exception;
 
-
+/**
+ * JsonToClass allow you to create a php model
+ * class from a json file.
+ * 
+ * @author Alex Nguetcha <nguetchaalex@gmail.com>
+ */
 class JsonToClass
 {
 
