@@ -38,61 +38,53 @@ $jtc->toFile(null, true);
 //Post.php
 <?php
 
-class Post
+class Person
 {
-	private $id;
-	private $id_member;
-	private $content;
-	private $create_at;
+	private $name;
+	private $old;
+	private $sick;
 
-	public function __construct(int $id, int $id_member, string $content, DateTime $create_at)
+	public function __construct(string $name, int $old, bool $sick)
 	{
-		$this->id = $id;
-		$this->id_member = $id_member;
-		$this->content = $content;
-		$this->create_at = $create_at;
+		$this->name = $name;
+		$this->old = $old;
+		$this->sick = $sick;
 	}
 
-	public function getId(): int
+	public function getName(): string
 	{
-		return $this->id;
+		return $this->name;
 	}
 
-	public function getIdMember(): int
+	public function getOld(): int
 	{
-		return $this->id_member;
+		return $this->old;
 	}
 
-	public function getContent(): string
+	public function isSick(): bool
 	{
-		return $this->content;
-	}
-
-	public function getCreateAt(): DateTime
-	{
-		return $this->create_at;
+		return $this->sick;
 	}
 
 
-	public function setId(int $id)
+	public function setName(string $name):self
 	{
-		$this->id = $id;
+		$this->name = $name;
+		return $this;
 	}
 
-	public function setIdMember(int $id_member)
+	public function setOld(int $old):self
 	{
-		$this->id_member = $id_member;
+		$this->old = $old;
+		return $this;
 	}
 
-	public function setContent(string $content)
+	public function setSick(bool $sick):self
 	{
-		$this->content = $content;
+		$this->sick = $sick;
+		return $this;
 	}
 
-	public function setCreateAt(DateTime $create_at)
-	{
-		$this->create_at = $create_at;
-	}
 
 }
 
