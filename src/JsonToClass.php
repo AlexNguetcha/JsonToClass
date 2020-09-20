@@ -132,7 +132,7 @@ class JsonToClass
             }
             $func = "\tpublic function set" . $this->methodName($setterName) . "(" . $param . ")";
             if ($this->isFluentSetter) {
-                $func .= ":self";
+                $func .= ": self";
             }
             $func .= "\n\t{\n";
             $func .= "\t\t$" . "this->" . $attrName . " = $" . $attrName . ";\n";
