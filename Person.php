@@ -1,4 +1,5 @@
 <?php
+
 class Person
 {
 	private $name;
@@ -28,19 +29,22 @@ class Person
 	}
 
 
-	public function setName(string $name)
+	public function setName(string $name):self
 	{
 		$this->name = $name;
+		return $this;
 	}
 
-	public function setOld(int $old)
+	public function setOld(int $old):self
 	{
 		$this->old = $old;
+		return $this;
 	}
 
-	public function setSick(bool $sick)
+	public function setSick(bool $sick):self
 	{
 		$this->sick = $sick;
+		return $this;
 	}
 
 }
